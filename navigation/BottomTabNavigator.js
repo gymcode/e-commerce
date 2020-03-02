@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import CheckoutScreen from '../screens/CheckoutScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -24,8 +24,8 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
+        name="Checkout"
+        component={CheckoutScreen}
         options={{
           title: 'Checkout',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
@@ -41,7 +41,7 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return 'Shopping App';
-    case 'Links':
+    case 'Checkout':
       return 'CheckOut Section';
   }
 }

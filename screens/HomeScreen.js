@@ -88,7 +88,7 @@ const productItems = [
 
 ]
 
-const HomeScreen = (props)=>{
+const HomeScreen = ({navigation})=>{
   const [product, setProduct] = useState(productItems);
   const [cart, setCart] = useState([]);
   
@@ -107,7 +107,7 @@ const HomeScreen = (props)=>{
   }
 
   const removeItemsFromCart = (items)=>{
-     const reNewCart = items.filter((item)=> item.id !== id);
+     const reNewCart = items.filter((product)=>{product.id !== id})
       product.isTrue = false
 
       setCart([reNewCart, ...product])
@@ -129,7 +129,7 @@ const HomeScreen = (props)=>{
           </TouchableOpacity>
           <Text style={{fontSize: 26, color: "#4b617a", }}>Stock Product </Text>
           <View style={{flexDirection: "row"}}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>{ navigation.navigate('Checkout')}}>
             <View style={{ height: 30, width: 30, justifyContent: "center", alignItems: "center", borderRadius: 50}}>
               <Ionicons
                 name="md-cart"
@@ -150,11 +150,22 @@ const HomeScreen = (props)=>{
         {/* display section */}
         <ScrollView horizontal={true}>
             <View style={{display: "flex", flexDirection: "row", marginVertical: 10,marginVertical: 20}}>
-              <View style={{height: 180, width: 180,  shadowColor: '#000', shadowOffset: {width: 0, height: 1},shadowOpacity:0.8 ,borderRadius: 10,backgroundColor: "red"}}/>
-              <View style={{height: 180, width: 180, marginLeft: 15,  shadowColor: '#000', shadowOffset: {width: 0, height: 1},shadowOpacity:0.8 ,borderRadius: 10,backgroundColor: "blue"}}/>
-              <View style={{height: 180, width: 180, marginLeft: 15,  shadowColor: '#000', shadowOffset: {width: 0, height: 1},shadowOpacity:0.8 ,borderRadius: 10,backgroundColor: "green"}}/>
-              <View style={{height: 180, width: 180, marginLeft: 15,  shadowColor: '#000', shadowOffset: {width: 0, height: 1},shadowOpacity:0.8 ,borderRadius: 10,backgroundColor: "yellow"}}/>
-              <View style={{height: 180, width: 180, marginLeft: 15,  shadowColor: '#000', shadowOffset: {width: 0, height: 1},shadowOpacity:0.8 ,borderRadius: 10,backgroundColor: "orange"}}/>
+              <View style={{height: 180, width: 180 }}>
+                <Image source={require('../assets/images/img4.png')} style={{height: 180, width: 180}}/>
+              </View>
+             <View style={{marginLeft: 15, height: 180, width: 180}}>
+                <Image source={require('../assets/images/img7.png')} style={{height: 180, width: 180, borderRadius: 10}}/>
+              </View>
+              <View style={{marginLeft: 15, height: 180, width: 180}}>
+                <Image source={require('../assets/images/img9.png')} style={{height: 180, width: 180}}/>
+              </View>
+              <View style={{marginLeft: 15, height: 180, width: 180}}>
+                <Image source={require('../assets/images/img6.png')} style={{height: 180, width: 180, borderRadius: 10}}/>
+              </View>
+              <View style={{marginLeft: 15, height: 180, width: 180}}>
+                <Image source={require('../assets/images/img3.png')} style={{height: 180, width: 180}}/>
+              </View>
+              
             </View>
         </ScrollView>
         {/* third section */}
