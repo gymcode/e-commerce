@@ -1,14 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View, 
   Text, 
   Button, 
   ScrollView, 
   Image,
-  TouchableOpacity
+  TouchableOpacity, 
+  StyleSheet
 } from 'react-native'; 
-import {Ionicons, Entypo} from '@expo/vector-icons'
-import Icons from '@expo/vector-icons/MaterialCommunityIcons'
+import {Ionicons, Entypo, FontAwesome} from '@expo/vector-icons';
+import Icons from '@expo/vector-icons/MaterialCommunityIcons';
+import {CartContext} from '../App'
+
+//sections
+import Slide from '../sections/slideSection'
 
 
 // json file
@@ -88,52 +93,31 @@ const productItems = [
 
 ]
 
-const HomeScreen = (props)=>{
+const HomeScreen = ({navigation})=>{
   const [product, setProduct] = useState(productItems);
-  const [cart, setCart] = useState([]);
+  const {cart, addToProductToCart, removeItems} = useContext(CartContext);
   
-
-  const addItemstoCart = (products)=>{
-    const {id, name, price} = products
-
-    const newCart = {
-        id, 
-        name, 
-        price
-    }
-    products.isTrue = true;
-
-    setCart([newCart, ...cart]);
-  }
-
-  const removeItemsFromCart = (items)=>{
-     const reNewCart = items.filter((item)=> item.id !== id);
-      product.isTrue = false
-
-      setCart([reNewCart, ...product])
-  }
-
   return(
     <ScrollView>
-    <View style={{flex: 1,backgroundColor: "rgba(236, 231, 231, 0.856)"}} > 
+    <View style={styles.mainView} > 
         {/* header section  */}
-        <View style={{flexDirection: "row", padding:20,justifyContent: "space-between"}}>
+        <View style={styles.mainHeader}>
           <TouchableOpacity>
             <View >
               <Entypo
                 name="menu"
-                size={25}
+                size={22}
                 color={"#4b617a"}
               />
             </View>
           </TouchableOpacity>
           <Text style={{fontSize: 26, color: "#4b617a", }}>Stock Product </Text>
           <View style={{flexDirection: "row"}}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>{ navigation.navigate('Checkout')}}>
             <View style={{ height: 30, width: 30, justifyContent: "center", alignItems: "center", borderRadius: 50}}>
-              <Ionicons
-                name="md-cart"
-                size ={25}
+              <FontAwesome
+                name="opencart"
+                size ={22}
                 color="#4b617a"
               />
             </View>
@@ -149,21 +133,15 @@ const HomeScreen = (props)=>{
         </View>
         {/* display section */}
         <ScrollView horizontal={true}>
-            <View style={{display: "flex", flexDirection: "row", marginVertical: 10,marginVertical: 20}}>
-              <View style={{height: 180, width: 180,  shadowColor: '#000', shadowOffset: {width: 0, height: 1},shadowOpacity:0.8 ,borderRadius: 10,backgroundColor: "red"}}/>
-              <View style={{height: 180, width: 180, marginLeft: 15,  shadowColor: '#000', shadowOffset: {width: 0, height: 1},shadowOpacity:0.8 ,borderRadius: 10,backgroundColor: "blue"}}/>
-              <View style={{height: 180, width: 180, marginLeft: 15,  shadowColor: '#000', shadowOffset: {width: 0, height: 1},shadowOpacity:0.8 ,borderRadius: 10,backgroundColor: "green"}}/>
-              <View style={{height: 180, width: 180, marginLeft: 15,  shadowColor: '#000', shadowOffset: {width: 0, height: 1},shadowOpacity:0.8 ,borderRadius: 10,backgroundColor: "yellow"}}/>
-              <View style={{height: 180, width: 180, marginLeft: 15,  shadowColor: '#000', shadowOffset: {width: 0, height: 1},shadowOpacity:0.8 ,borderRadius: 10,backgroundColor: "orange"}}/>
-            </View>
+            <Slide/>
         </ScrollView>
         {/* third section */}
         <View style={{padding: 20}}>
         <View style={{height: 140, marginVertical: -50}}>
-              <View style={{ flex:1, padding: 16, backgroundColor: "#f0f0f0", shadowColor: '#000', shadowOffset: {width: 0, height: 1},shadowOpacity:0.1 ,marginTop:50, borderRadius: 10, flexDirection: "row", }}>
+              <View style={styles.thirdSec}>
                         <View style={{flex: 1}}>
                           <TouchableOpacity>
-                            <View style={{borderRadius: 40, borderWidth: 1, shadowColor: '#000', shadowOffset: {width: 0, height: 1}, borderColor: 'red', height:65, width: 65, justifyContent: "center", alignItems: "center"}}>
+                            <View style={styles.thirdSecIcon1}>
                             <Icons
                                 name="truck-delivery"
                                 size={30}
@@ -174,7 +152,7 @@ const HomeScreen = (props)=>{
                         </View>  
                         <View style={{flex: 1}}>
                          <TouchableOpacity>
-                            <View style={{borderRadius: 40, borderWidth: 1, shadowColor: '#000', shadowOffset: {width: 0, height: 1}, borderColor: 'orange', height:65, width: 65, justifyContent: "center", alignItems: "center"}}>
+                            <View style={styles.thirdSecIcon2}>
                             <Icons
                                 name="timer-sand"
                                 size={30}
@@ -185,7 +163,7 @@ const HomeScreen = (props)=>{
                         </View>  
                         <View style={{flex: 1}}>
                           <TouchableOpacity>
-                            <View style={{borderRadius: 40, borderWidth: 1, shadowColor: '#000', shadowOffset: {width: 0, height: 1}, borderColor: 'green', height:65, width: 65, justifyContent: "center", alignItems: "center"}}>
+                            <View style={styles.thirdSecIcon3}>
                             <Ionicons
                                 name="ios-airplane"
                                 size={30}
@@ -196,7 +174,7 @@ const HomeScreen = (props)=>{
                         </View>  
                           <View style={{flex: 1}}>
                           <TouchableOpacity>
-                            <View style={{borderRadius: 40, borderWidth: 1, shadowColor: '#000', shadowOffset: {width: 0, height: 1}, borderColor: 'blue', height:65, width: 65, justifyContent: "center", alignItems: "center"}}>
+                            <View style={styles.thirdSecIcon4}>
                                 <Ionicons
                                 name="ios-call"
                                 size={30}
@@ -212,12 +190,11 @@ const HomeScreen = (props)=>{
           <Text style={{textAlign: "center", fontSize: 20, color: "#4b617a"}}>Shopping List</Text>
         </View>
         {/* product section  */}
-        <ScrollView>
         <View style={{flexDirection: "row", flexWrap: "wrap",marginTop: 20 }}>
             {
               product.map((products)=>{
                 return(
-                  <View key={products.id} style={{display: 'flex', shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity:0.1, borderRadius: 10 ,backgroundColor: "#f0f0f0", marginBottom: 10, marginLeft: 10,height:160, width: 150}}>
+                  <View key={products.id} style={styles.proHeader}>
                     <View style={{flexDirection: "column", flex: 1}}>
                       <View style={{flex: 3}}>
                         <Image source={products.image} style={{height: 96, borderRadius: 10,width: 150}}/>
@@ -233,11 +210,11 @@ const HomeScreen = (props)=>{
                         {
                           products.isTrue ? 
                           <View>
-                            <Button title="Remove" onPress={()=>{removeItemsFromCart(products)}}/>
+                            <Button title="Remove" onPress={()=>{removeItems(products)}}/>
                           </View>
                           : 
                           <View>
-                            <Button title="Add" onPress={ ()=>{addItemstoCart(products)}}/>
+                            <Button title="Add" onPress={()=>{addToProductToCart(products)}}/>
                           </View> 
                         }
                       </View>
@@ -247,11 +224,87 @@ const HomeScreen = (props)=>{
               })
             }
         </View>
-        </ScrollView>
         </View>
     </View>
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+    mainView: {
+      flex: 1,
+      backgroundColor: "#fffff0"
+    }, 
+    mainHeader: {
+      flexDirection: "row", 
+      padding:20,
+      justifyContent: "space-between"
+    }, 
+    thirdSec: {
+      flex:1, 
+      padding: 16, 
+      backgroundColor: "rgba(236, 231, 231, 0.856)", 
+      shadowColor: '#000', 
+      shadowOffset: {width: 0, height: 1},
+      shadowOpacity:0.1,
+      marginTop:50, 
+      borderRadius: 10, 
+      flexDirection: "row", 
+    }, 
+    thirdSecIcon1: {
+      borderRadius: 40, 
+      borderWidth: 1, 
+      shadowColor: '#000', 
+      shadowOffset: {width: 0, height: 1}, 
+      borderColor: 'red', 
+      height:65, width: 65, 
+      justifyContent: "center", 
+      alignItems: "center"
+    }, 
+    thirdSecIcon2: {
+      borderRadius: 40, 
+      borderWidth: 1, 
+      shadowColor: '#000', 
+      shadowOffset: {width: 0, height: 1}, 
+      borderColor: 'orange', 
+      height:65, width: 65, 
+      justifyContent: "center", 
+      alignItems: "center"
+    }, 
+    thirdSecIcon3: {
+      borderRadius: 40, 
+      borderWidth: 1, 
+      shadowColor: '#000', 
+      shadowOffset: {width: 0, height: 1}, 
+      borderColor: 'green', 
+      height:65, 
+      width: 65, 
+      justifyContent: "center", 
+      alignItems: "center"
+    },
+    thirdSecIcon4: {
+      borderRadius: 40, 
+      borderWidth: 1, 
+      shadowColor: '#000', 
+      shadowOffset: {width: 0, height: 1}, 
+      borderColor: 'blue', 
+      height:65, 
+      width: 65, 
+      justifyContent: "center", 
+      alignItems: "center"
+    }, 
+    proHeader: {
+      display: 'flex', 
+      shadowColor: '#000', 
+      shadowOffset: {width: 0, height: 1}, 
+      shadowOpacity:0.1, 
+      borderRadius: 10 ,
+      backgroundColor: "rgba(236, 231, 231, 0.856)", 
+      marginBottom: 10, 
+      marginLeft: 10,
+      height:160, 
+      width: 150
+    }
+})
 
 export default HomeScreen;

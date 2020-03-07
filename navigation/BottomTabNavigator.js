@@ -1,11 +1,21 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {View, Text} from 'react-native'
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import CheckoutScreen from '../screens/CheckoutScreen';
+// import PaymentScreen from '../screens/PaymentScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
+
+const HeaderSection = ()=>{
+  return(
+    <View>
+      <Text style={{fontSize: 50}}>hello</Text>
+    </View>
+  )
+}
 
 export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
@@ -20,17 +30,25 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={HomeScreen}
         options={{
           title: 'Home',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-home" />,
         }}
       />
       <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
+        name="Checkout"
+        component={CheckoutScreen}
         options={{
           title: 'Checkout',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-cart" />,
         }}
       />
+      {/* <BottomTab.Screen
+        name="Payment"
+        component={PaymentScreen}
+        options={{
+          title: "Payment",
+          tabBarIcon: ({ focused })=> <TabBarIcon focused={focused} name="ios-cart" />,
+        }}
+      /> */}
     </BottomTab.Navigator>
   );
 }
@@ -40,8 +58,8 @@ function getHeaderTitle(route) {
 
   switch (routeName) {
     case 'Home':
-      return 'Shopping App';
-    case 'Links':
+      return <HeaderSection/>;
+    case 'Checkout':
       return 'CheckOut Section';
   }
 }
